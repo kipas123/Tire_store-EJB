@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+
 import tire_store.entities.User;
 
 @Stateless
@@ -28,5 +29,9 @@ public class UserDAO {
 		public User get(User id) {
 			return em.find(User.class, id);
 		}
+		public User getbyUsername(int id) {
+			return em.find(User.class, id);
+		}
+		
 	
 }
