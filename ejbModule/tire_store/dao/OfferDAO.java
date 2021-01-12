@@ -33,7 +33,19 @@ public class OfferDAO {
 		public Offer get(Offer id) {
 			return em.find(Offer.class, id);
 		}
-	
+		
+		public Offer get(int id) {
+			try {
+				Query query = em.createQuery("from Offer u where u.idoffer=:id");
+				query.setParameter("id", id);
+				return (Offer)query.getSingleResult();
+
+			}catch(javax.persistence.NoResultException e) {
+				return null;
+			}
+		}
+		
+		
 		public List<Offer> getOffer(byte active) {
 			List<Offer> list = null;
 			Query query = em.createQuery("from Offer p where p.active=:active");
