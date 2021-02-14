@@ -22,9 +22,9 @@ public class Orderstatus implements Serializable {
 
 	private int sequence;
 
-	//bi-directional many-to-one association to Order
+	//bi-directional many-to-one association to Storeorder
 	@OneToMany(mappedBy="orderstatus")
-	private List<Order> orders;
+	private List<Storeorder> storeorders;
 
 	public Orderstatus() {
 	}
@@ -53,26 +53,26 @@ public class Orderstatus implements Serializable {
 		this.sequence = sequence;
 	}
 
-	public List<Order> getOrders() {
-		return this.orders;
+	public List<Storeorder> getStoreorders() {
+		return this.storeorders;
 	}
 
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
+	public void setStoreorders(List<Storeorder> storeorders) {
+		this.storeorders = storeorders;
 	}
 
-	public Order addOrder(Order order) {
-		getOrders().add(order);
-		order.setOrderstatus(this);
+	public Storeorder addStoreorder(Storeorder storeorder) {
+		getStoreorders().add(storeorder);
+		storeorder.setOrderstatus(this);
 
-		return order;
+		return storeorder;
 	}
 
-	public Order removeOrder(Order order) {
-		getOrders().remove(order);
-		order.setOrderstatus(null);
+	public Storeorder removeStoreorder(Storeorder storeorder) {
+		getStoreorders().remove(storeorder);
+		storeorder.setOrderstatus(null);
 
-		return order;
+		return storeorder;
 	}
 
 }

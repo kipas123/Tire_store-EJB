@@ -18,10 +18,11 @@ public class TireproductHasOrder implements Serializable {
 	private TireproductHasOrderPK id;
 
 	private int quantity;
-	//bi-directional many-to-one association to Order
+
+	//bi-directional many-to-one association to Storeorder
 	@ManyToOne
-	@JoinColumn(name = "order_idorder", insertable=false, updatable=false)
-	private Order order;
+	@JoinColumn(name="order_idorder", insertable=false, updatable=false)
+	private Storeorder storeorder;
 
 	//bi-directional many-to-one association to Tireproduct
 	@ManyToOne
@@ -47,12 +48,12 @@ public class TireproductHasOrder implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public Order getOrder() {
-		return this.order;
+	public Storeorder getStoreorder() {
+		return this.storeorder;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setStoreorder(Storeorder storeorder) {
+		this.storeorder = storeorder;
 	}
 
 	public Tireproduct getTireproduct() {

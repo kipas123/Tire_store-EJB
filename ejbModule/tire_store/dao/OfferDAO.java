@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import tire_store.entities.Offer;
-import tire_store.entities.Order;
+import tire_store.entities.Tireproduct;
 import tire_store.entities.User;
 
 @Stateless
@@ -38,6 +38,16 @@ public class OfferDAO {
 			try {
 				Query query = em.createQuery("from Offer u where u.idoffer=:id");
 				query.setParameter("id", id);
+				return (Offer)query.getSingleResult();
+
+			}catch(javax.persistence.NoResultException e) {
+				return null;
+			}
+		}
+		public Offer get(Tireproduct tireproduct) {
+			try {
+				Query query = em.createQuery("from Offer u where u.tireproduct=:tireproduct");
+				query.setParameter("tireproduct", tireproduct);
 				return (Offer)query.getSingleResult();
 
 			}catch(javax.persistence.NoResultException e) {

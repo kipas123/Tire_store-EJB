@@ -7,26 +7,19 @@ import java.util.List;
 
 
 /**
- * The persistent class for the user database table.
+ * The persistent class for the storeorder database table.
  * 
  */
 @Entity
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
-public class User implements Serializable {
+@NamedQuery(name="Storeorder.findAll", query="SELECT s FROM Storeorder s")
+public class Storeorder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int iduser;
+	private int idorder;
 
 	private String city;
-
-	@Column(name="created_by")
-	private String createdBy;
-
-	@Temporal(TemporalType.DATE)
-	@Column(name="created_date")
-	private Date createdDate;
 
 	private String housenumber;
 
@@ -37,11 +30,10 @@ public class User implements Serializable {
 	@Column(name="lastmodified_date")
 	private Date lastmodifiedDate;
 
-	private String login;
-
 	private String name;
 
-	private String password;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date orderdata;
 
 	private int phoneNumber;
 
@@ -49,26 +41,31 @@ public class User implements Serializable {
 
 	private String surname;
 
+	private double totalprice;
+
 	private String zipcode;
 
-	//bi-directional many-to-one association to Storeorder
-	@OneToMany(mappedBy="user")
-	private List<Storeorder> storeorders;
-
-	//bi-directional many-to-one association to Role
+	//bi-directional many-to-one association to Orderstatus
 	@ManyToOne
-	@JoinColumn(name="roles_idroles")
-	private Role role;
+	private Orderstatus orderstatus;
 
-	public User() {
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	private User user;
+
+	//bi-directional many-to-one association to TireproductHasOrder
+	@OneToMany(mappedBy="storeorder")
+	private List<TireproductHasOrder> tireproductHasOrders;
+
+	public Storeorder() {
 	}
 
-	public int getIduser() {
-		return this.iduser;
+	public int getIdorder() {
+		return this.idorder;
 	}
 
-	public void setIduser(int iduser) {
-		this.iduser = iduser;
+	public void setIdorder(int idorder) {
+		this.idorder = idorder;
 	}
 
 	public String getCity() {
@@ -77,22 +74,6 @@ public class User implements Serializable {
 
 	public void setCity(String city) {
 		this.city = city;
-	}
-
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
 	}
 
 	public String getHousenumber() {
@@ -119,14 +100,6 @@ public class User implements Serializable {
 		this.lastmodifiedDate = lastmodifiedDate;
 	}
 
-	public String getLogin() {
-		return this.login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -135,12 +108,12 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public String getPassword() {
-		return this.password;
+	public Date getOrderdata() {
+		return this.orderdata;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setOrderdata(Date orderdata) {
+		this.orderdata = orderdata;
 	}
 
 	public int getPhoneNumber() {
@@ -167,6 +140,14 @@ public class User implements Serializable {
 		this.surname = surname;
 	}
 
+	public double getTotalprice() {
+		return this.totalprice;
+	}
+
+	public void setTotalprice(double totalprice) {
+		this.totalprice = totalprice;
+	}
+
 	public String getZipcode() {
 		return this.zipcode;
 	}
@@ -175,34 +156,42 @@ public class User implements Serializable {
 		this.zipcode = zipcode;
 	}
 
-	public List<Storeorder> getStoreorders() {
-		return this.storeorders;
+	public Orderstatus getOrderstatus() {
+		return this.orderstatus;
 	}
 
-	public void setStoreorders(List<Storeorder> storeorders) {
-		this.storeorders = storeorders;
+	public void setOrderstatus(Orderstatus orderstatus) {
+		this.orderstatus = orderstatus;
 	}
 
-	public Storeorder addStoreorder(Storeorder storeorder) {
-		getStoreorders().add(storeorder);
-		storeorder.setUser(this);
-
-		return storeorder;
+	public User getUser() {
+		return this.user;
 	}
 
-	public Storeorder removeStoreorder(Storeorder storeorder) {
-		getStoreorders().remove(storeorder);
-		storeorder.setUser(null);
-
-		return storeorder;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public Role getRole() {
-		return this.role;
+	public List<TireproductHasOrder> getTireproductHasOrders() {
+		return this.tireproductHasOrders;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setTireproductHasOrders(List<TireproductHasOrder> tireproductHasOrders) {
+		this.tireproductHasOrders = tireproductHasOrders;
+	}
+
+	public TireproductHasOrder addTireproductHasOrder(TireproductHasOrder tireproductHasOrder) {
+		getTireproductHasOrders().add(tireproductHasOrder);
+		tireproductHasOrder.setStoreorder(this);
+
+		return tireproductHasOrder;
+	}
+
+	public TireproductHasOrder removeTireproductHasOrder(TireproductHasOrder tireproductHasOrder) {
+		getTireproductHasOrders().remove(tireproductHasOrder);
+		tireproductHasOrder.setStoreorder(null);
+
+		return tireproductHasOrder;
 	}
 
 }
